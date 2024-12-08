@@ -4,42 +4,46 @@ void main() {
   runApp(const MyApp());
 }
 
-// Main App Widget
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: ImageEditorUI(), // Navigates to the main UI screen
+      home: ImageEditorUI(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-// Main UI Screen
-class ImageEditorUI extends StatelessWidget {
+class ImageEditorUI extends StatefulWidget {
   const ImageEditorUI({super.key});
+
+  @override
+  State<ImageEditorUI> createState() => _ImageEditorUIState();
+}
+
+class _ImageEditorUIState extends State<ImageEditorUI> {
+  double fontSize = 24;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Meme Editor", // Title of the app
+          "Meme Maker",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.cyan, // AppBar background color
+        backgroundColor: Colors.pink,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16), // Padding around the content
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
               child: Center(
-                // Placeholder for the image area
                 child: Container(
                   color: Colors.grey[300],
                   alignment: Alignment.center,
@@ -51,18 +55,18 @@ class ImageEditorUI extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            // Buttons Row
             Row(
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      // Placeholder for image selection action
+                      print("Select Image clicked");
                     },
                     icon: const Icon(Icons.image),
                     label: const Text(
                       "Select Image",
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -74,12 +78,13 @@ class ImageEditorUI extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      // Placeholder for save action
+                      print("Save to Gallery clicked");
                     },
                     icon: const Icon(Icons.save),
                     label: const Text(
                       "Save to Gallery",
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -90,7 +95,6 @@ class ImageEditorUI extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            // Text Input Field
             TextField(
               decoration: const InputDecoration(
                 hintText: "Enter text",
@@ -98,24 +102,25 @@ class ImageEditorUI extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            // Font Size Slider
             Row(
               children: [
-                const Text("Font Size:"),
+                const Text("Font Size"),
                 Expanded(
                   child: Slider(
-                    value: 24, // Default value
+                    value: fontSize,
                     min: 12,
                     max: 72,
                     divisions: 6,
-                    label: "24", // Default label
+                    label: fontSize.toString(),
                     onChanged: (value) {
-                      // Placeholder for slider change action
+                      setState(() {
+                        fontSize = value;
+                      });
                     },
                   ),
                 ),
               ],
-            ),
+            )
           ],
         ),
       ),
