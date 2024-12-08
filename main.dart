@@ -10,32 +10,34 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: ImageEditorUI(),
+      home: ImageEditor(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class ImageEditorUI extends StatefulWidget {
-  const ImageEditorUI({super.key});
+class ImageEditor extends StatefulWidget {
+  const ImageEditor({super.key});
 
   @override
-  State<ImageEditorUI> createState() => _ImageEditorUIState();
+  State<ImageEditor> createState() => _ImageEditorState();
 }
 
-class _ImageEditorUIState extends State<ImageEditorUI> {
+class _ImageEditorState extends State<ImageEditor> {
+  String? text;
   double fontSize = 24;
+  Offset textPosition = const Offset(50, 50);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Meme Maker",
+          "Meme Editor",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.cyan,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -59,14 +61,11 @@ class _ImageEditorUIState extends State<ImageEditorUI> {
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: () {
-                      print("Select Image clicked");
-                    },
+                    onPressed: () {}, // Add your function here
                     icon: const Icon(Icons.image),
                     label: const Text(
                       "Select Image",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -77,14 +76,11 @@ class _ImageEditorUIState extends State<ImageEditorUI> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: () {
-                      print("Save to Gallery clicked");
-                    },
+                    onPressed: () {}, // Add your function here
                     icon: const Icon(Icons.save),
                     label: const Text(
-                      "Save to Gallery",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                      "Save Meme",
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -96,6 +92,7 @@ class _ImageEditorUIState extends State<ImageEditorUI> {
             ),
             const SizedBox(height: 10),
             TextField(
+              onChanged: (value) => setState(() => text = value),
               decoration: const InputDecoration(
                 hintText: "Enter text",
                 border: OutlineInputBorder(),
@@ -104,14 +101,14 @@ class _ImageEditorUIState extends State<ImageEditorUI> {
             const SizedBox(height: 10),
             Row(
               children: [
-                const Text("Font Size"),
+                const Text("Font Size:"),
                 Expanded(
                   child: Slider(
                     value: fontSize,
                     min: 12,
                     max: 72,
                     divisions: 6,
-                    label: fontSize.toString(),
+                    label: fontSize.round().toString(),
                     onChanged: (value) {
                       setState(() {
                         fontSize = value;
@@ -120,7 +117,8 @@ class _ImageEditorUIState extends State<ImageEditorUI> {
                   ),
                 ),
               ],
-            )
+            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),
